@@ -3,12 +3,12 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.loganmurphy.morning-report</string>
+    <string>com.yourname.morning-report</string>
 
     <key>ProgramArguments</key>
     <array>
         <string>/usr/bin/python3</string>
-        <string>/Users/stitchceo/Dev/automation/scripts/morning_report.py</string>
+        <string>/Users/yourname/Dev/automation/scripts/morning_report.py</string>
     </array>
 
     <key>StartCalendarInterval</key>
@@ -20,9 +20,9 @@
     </dict>
 
     <key>StandardOutPath</key>
-    <string>/Users/stitchceo/Dev/automation/logs/morning_report.log</string>
+    <string>/Users/yourname/Dev/automation/logs/morning_report.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/stitchceo/Dev/automation/logs/morning_report_error.log</string>
+    <string>/Users/yourname/Dev/automation/logs/morning_report_error.log</string>
 
     <key>RunAtLoad</key>
     <false/>

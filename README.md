@@ -30,8 +30,9 @@ sudo pmset repeat wake MTWRFSU 08:55:00
 Install the launchd job:
 
 ```bash
-cp com.loganmurphy.morning-report.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/com.loganmurphy.morning-report.plist
+cp com.yourname.morning-report.plist.example com.yourname.morning-report.plist
+# edit: replace yourname + paths with your own
+launchctl load ~/Library/LaunchAgents/com.yourname.morning-report.plist
 ```
 
 The Mac returns to sleep on its own after the report finishes, based on your normal Energy Saver timeout. Logs → `logs/`.
