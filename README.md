@@ -19,6 +19,23 @@ python3 scripts/morning_report.py
 
 First run launches a setup wizard. It auto-detects credentials from the sibling MCP server repos if they're present on disk.
 
+### Scheduling
+
+Schedule a daily hardware wake at 8:55 AM so the Mac is up when launchd fires the job at 9:00:
+
+```bash
+sudo pmset repeat wake MTWRFSU 08:55:00
+```
+
+Install the launchd job:
+
+```bash
+cp com.loganmurphy.morning-report.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/com.loganmurphy.morning-report.plist
+```
+
+The Mac returns to sleep on its own after the report finishes, based on your normal Energy Saver timeout. Logs → `logs/`.
+
 ## Dependencies
 
 - Python 3 (pre-installed on macOS)
