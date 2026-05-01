@@ -31,8 +31,15 @@ Install the launchd job:
 
 ```bash
 cp com.yourname.morning-report.plist.example com.yourname.morning-report.plist
-# edit: replace yourname + paths with your own
+# edit: replace yourname and paths with your own
+cp com.yourname.morning-report.plist ~/Library/LaunchAgents/
 launchctl load ~/Library/LaunchAgents/com.yourname.morning-report.plist
+```
+
+Verify it's registered:
+
+```bash
+launchctl list | grep morning-report
 ```
 
 The Mac returns to sleep on its own after the report finishes, based on your normal Energy Saver timeout. Logs → `logs/`.
