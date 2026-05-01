@@ -1,0 +1,4 @@
+scripts/config.json
+scripts/__pycache__/
+scripts/*.pyc
+logs/
