@@ -237,13 +237,17 @@ Total: {total_miles:.1f} mi across {len(activities)} activities
    Style: font-size:22px; font-weight:700; color:#1a1a1a; margin:0 0 24px 0; padding-bottom:16px; border-bottom:2px solid #f0f0f0
 
 2. RECOVERY section
-   <h2> "Recovery" — font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6b7280; margin:0 0 12px 0
-   Show readiness and sleep scores as large inline numbers with color coding:
+   <h2> "Recovery" — font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6b7280; margin:0 0 16px 0
+   Show readiness and sleep as two separate score blocks, each on its own line:
+     Score block: flex row with align-items:baseline; gap:8px
+       - Large number: font-size:32px; font-weight:700; line-height:1; color per threshold
+       - Label: font-size:14px; color:#6b7280; margin-left:4px
      ≥85 → #16a34a (green), 70–84 → #d97706 (amber), <70 → #dc2626 (red)
-   Score format: bold number (28px) followed by label (13px #6b7280)
-   Show 2–3 most notable readiness contributors (only those notably high or low)
-   Show SpO2 average if available
-   Separate readiness/sleep scores from contributors with a small gap
+     16px vertical gap between the two score blocks
+   Contributors: each on its own line below the scores, 12px top margin
+     Format: "Label — value" in 14px; label in #6b7280, value color-coded by threshold
+     Show 2–3 most notable (notably high or low only)
+   SpO₂ avg on its own line at 14px if available
 
 3. SLEEP & READINESS TREND section ({monday.strftime("%b %d")}–{today.strftime("%b %d")})
    <h2> same style
