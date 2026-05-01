@@ -237,13 +237,17 @@ Total: {total_miles:.1f} mi across {len(activities)} activities
    Style: font-size:22px; font-weight:700; color:#1a1a1a; margin:0 0 24px 0; padding-bottom:16px; border-bottom:2px solid #f0f0f0
 
 2. RECOVERY section
-   <h2> "Recovery" — font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6b7280; margin:0 0 12px 0
-   Show readiness and sleep scores as large inline numbers with color coding:
+   <h2> "Recovery" — font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#6b7280; margin:0 0 16px 0
+   Show readiness and sleep as two separate score blocks, each on its own line:
+     Score block: flex row with align-items:baseline; gap:8px
+       - Large number: font-size:32px; font-weight:700; line-height:1; color per threshold
+       - Label: font-size:14px; color:#6b7280; margin-left:4px
      ≥85 → #16a34a (green), 70–84 → #d97706 (amber), <70 → #dc2626 (red)
-   Score format: bold number (28px) followed by label (13px #6b7280)
-   Show 2–3 most notable readiness contributors (only those notably high or low)
-   Show SpO2 average if available
-   Separate readiness/sleep scores from contributors with a small gap
+     16px vertical gap between the two score blocks
+   Contributors: each on its own line below the scores, 12px top margin
+     Format: "Label — value" in 14px; label in #6b7280, value color-coded by threshold
+     Show 2–3 most notable (notably high or low only)
+   SpO₂ avg on its own line at 14px if available
 
 3. SLEEP & READINESS TREND section ({monday.strftime("%b %d")}–{today.strftime("%b %d")})
    <h2> same style
@@ -255,15 +259,15 @@ Total: {total_miles:.1f} mi across {len(activities)} activities
 4. YESTERDAY'S TRAINING section
    <h2> same style as above
    If no activity: "Rest day" in #6b7280
-   If activity exists, show each stat on its own line inside a small stat block:
-     Activity name (bold, 16px)
-     🏃 Distance: X.X mi
-     ⏱ Duration: XX min
-     ❤️ Avg HR: XXX bpm  (if available)
-     ⚡ Avg Power: XXX W  (if available)
-     ⚡ Normalized Power: XXX W  (if available — never abbreviate as NP)
-     📍 Indoor / Outdoor  (based on trainer field)
-   Use a small def-list style: label in #6b7280 (13px), value in #1a1a1a (15px, normal weight), each pair on its own line with 6px vertical gap
+   If activity exists, render the stat block exactly like this structure:
+     <div style="font-weight:700;font-size:16px;margin-bottom:10px;">Activity Name</div>
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Distance</span> &nbsp; <span style="color:#1a1a1a;">X.X mi</span></div>
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Duration</span> &nbsp; <span style="color:#1a1a1a;">XX min</span></div>
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Avg HR</span> &nbsp; <span style="color:#1a1a1a;">XXX bpm</span></div>  (if available)
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Avg Power</span> &nbsp; <span style="color:#1a1a1a;">XXX W</span></div>  (if available)
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Normalized Power</span> &nbsp; <span style="color:#1a1a1a;">XXX W</span></div>  (if available — never abbreviate as NP)
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Location</span> &nbsp; <span style="color:#1a1a1a;">Indoor / Outdoor</span></div>
+   Each stat MUST be its own <div> with display:block — never put multiple stats in one element
 
 5. WEEK SO FAR section ({monday.strftime("%b %d")}–{today.strftime("%b %d")})
    <h2> same style
@@ -283,8 +287,9 @@ No horizontal rules between sections except the one under the header.
 
 
 def generate_report(prompt: str) -> str:
+    claude_bin = Path.home() / ".local/bin/claude"
     result = subprocess.run(
-        ["claude", "-p", prompt],
+        [str(claude_bin), "-p", prompt],
         capture_output=True,
         text=True,
         timeout=120,
