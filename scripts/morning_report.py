@@ -259,15 +259,15 @@ Total: {total_miles:.1f} mi across {len(activities)} activities
 4. YESTERDAY'S TRAINING section
    <h2> same style as above
    If no activity: "Rest day" in #6b7280
-   If activity exists, show each stat on its own line inside a small stat block:
-     Activity name (bold, 16px)
-     🏃 Distance: X.X mi
-     ⏱ Duration: XX min
-     ❤️ Avg HR: XXX bpm  (if available)
-     ⚡ Avg Power: XXX W  (if available)
-     ⚡ Normalized Power: XXX W  (if available — never abbreviate as NP)
-     📍 Indoor / Outdoor  (based on trainer field)
-   Use a small def-list style: label in #6b7280 (13px), value in #1a1a1a (15px, normal weight), each pair on its own line with 6px vertical gap
+   If activity exists, render the stat block exactly like this structure:
+     <div style="font-weight:700;font-size:16px;margin-bottom:10px;">Activity Name</div>
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Distance</span> &nbsp; <span style="color:#1a1a1a;">X.X mi</span></div>
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Duration</span> &nbsp; <span style="color:#1a1a1a;">XX min</span></div>
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Avg HR</span> &nbsp; <span style="color:#1a1a1a;">XXX bpm</span></div>  (if available)
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Avg Power</span> &nbsp; <span style="color:#1a1a1a;">XXX W</span></div>  (if available)
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Normalized Power</span> &nbsp; <span style="color:#1a1a1a;">XXX W</span></div>  (if available — never abbreviate as NP)
+     <div style="display:block;margin-bottom:6px;font-size:14px;"><span style="color:#6b7280;">Location</span> &nbsp; <span style="color:#1a1a1a;">Indoor / Outdoor</span></div>
+   Each stat MUST be its own <div> with display:block — never put multiple stats in one element
 
 5. WEEK SO FAR section ({monday.strftime("%b %d")}–{today.strftime("%b %d")})
    <h2> same style
@@ -287,8 +287,9 @@ No horizontal rules between sections except the one under the header.
 
 
 def generate_report(prompt: str) -> str:
+    claude_bin = Path.home() / ".local/bin/claude"
     result = subprocess.run(
-        ["claude", "-p", prompt],
+        [str(claude_bin), "-p", prompt],
         capture_output=True,
         text=True,
         timeout=120,
